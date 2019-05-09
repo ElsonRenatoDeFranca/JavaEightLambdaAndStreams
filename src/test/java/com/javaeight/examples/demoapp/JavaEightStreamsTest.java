@@ -11,6 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.IntPredicate;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import static org.hamcrest.Matchers.equalTo;
@@ -32,6 +33,7 @@ public class JavaEightStreamsTest {
 
 
     private List<String> infoList;
+    private static final String BLANK_SPACE = " ";
 
 
     @Before
@@ -169,7 +171,27 @@ public class JavaEightStreamsTest {
         List<Integer> underagesList = ages.stream().filter(underages).collect(Collectors.toList());
         assertThat(underagesList, hasSize(3));
     }
-    
+
+    @Test
+    public void testCapitalizeLetters(){
+        String originalString ="Lorem ipsum dolor sit amet";
+        List<String> paragraph = Arrays.asList(originalString.split(Pattern.quote(BLANK_SPACE)));
+        StringBuffer capitalizedString = new StringBuffer();
+
+        for(int i=0; i< paragraph.size(); i++){
+            String word = paragraph.get(i);
+            for(int j=0; j < word.length(); j++){
+                Character letter = word.charAt(j);
+                if(j==0){
+                    capitalizedString.append(word.replace(letter,Character.toUpperCase(letter)));
+                    capitalizedString.append(BLANK_SPACE);
+                }
+            }
+
+        }
+
+    }
+
 
 
 
