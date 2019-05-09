@@ -1,4 +1,4 @@
-# JavaEightLambdaAndStreams
+# Java 8 new features - by example
 
 JAVA 8 is a major feature release of JAVA programming language development. In this repository we present an overview
 about new java 8 features by example:
