@@ -198,11 +198,13 @@ public class JavaEightStreamsTest {
 
     @Test
     public void testCapitalizeLettersJava8(){
-        String originalString ="Lorem ipsum dolor sit amet";
-        String strings = Stream.of(originalString.split(BLANK_SPACE)).map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1).toLowerCase()).
-                collect(Collectors.joining(BLANK_SPACE));
+        String originalString = "Lorem ipsum dolor sit amet";
+        String expectedString = "Lorem Ipsum Dolor Sit Amet";
+        String strings = Stream.of(originalString.split(BLANK_SPACE)).
+                         map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1).toLowerCase()).
+                         collect(Collectors.joining(BLANK_SPACE));
 
-        System.out.println(strings);
+        assertThat(expectedString, is(equalTo(strings)));
 
     }
 
