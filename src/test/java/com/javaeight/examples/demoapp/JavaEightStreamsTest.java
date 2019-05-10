@@ -13,6 +13,7 @@ import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasItems;
@@ -173,7 +174,7 @@ public class JavaEightStreamsTest {
     }
 
     @Test
-    public void testCapitalizeLetters(){
+    public void testCapitalizeLettersJava6(){
         String originalString ="Lorem ipsum dolor sit amet";
         List<String> paragraph = Arrays.asList(originalString.split(Pattern.quote(BLANK_SPACE)));
         StringBuffer capitalizedString = new StringBuffer();
@@ -192,13 +193,17 @@ public class JavaEightStreamsTest {
 
 
 
-        paragraph.forEach(word -> word.chars().filter(ch -> ch =='a'));
-
-       //paragraph.stream().forEach(word -> word.chars().filter(ch -> ch == 'L'));
-
     }
 
 
+    @Test
+    public void testCapitalizeLettersJava8(){
+        String originalString ="Lorem ipsum dolor sit amet";
+        String strings = Stream.of(originalString.split(BLANK_SPACE)).map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1).toLowerCase()).
+                collect(Collectors.joining(BLANK_SPACE));
 
+        System.out.println(strings);
+
+    }
 
 }
