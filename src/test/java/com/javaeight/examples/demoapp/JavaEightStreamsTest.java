@@ -190,6 +190,12 @@ public class JavaEightStreamsTest {
 
         }
 
+
+
+        paragraph.forEach(word -> word.chars().filter(ch -> ch =='a'));
+
+       //paragraph.stream().forEach(word -> word.chars().filter(ch -> ch == 'L'));
+
     }
 
 
