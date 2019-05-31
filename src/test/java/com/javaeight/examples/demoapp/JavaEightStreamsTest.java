@@ -191,10 +191,7 @@ public class JavaEightStreamsTest {
 
         }
 
-
-
     }
-
 
     @Test
     public void testCapitalizeLettersJava8(){
@@ -208,4 +205,17 @@ public class JavaEightStreamsTest {
 
     }
 
+
+
+    @Test
+    public void testNotOrangeWithPredicate(){
+        List<String> fruits = Arrays.asList("Apple", "Banana", "Cherry", "Orange");
+        Predicate<String> fruitFilterExample = (String fruit)  -> !fruit.equals("Orange");
+        List<String> filteredFruits = fruits.stream().filter(fruitFilterExample).collect(Collectors.toList());
+        assertThat(filteredFruits, hasItems("Apple","Banana","Cherry"));
+    }
+
+
 }
+
+
