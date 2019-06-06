@@ -225,15 +225,42 @@ public class JavaEightStreamsTest {
 
     @Test
     public void AddSuffixToItemList(){
-        List<String> fruits = new LinkedList<>(Arrays.asList("Apple", "Banana", "Cherry", "Orange"));
+        List<String> fruits = new LinkedList<>(Arrays.asList("Pineaple","Apple", "Banana", "Cherry", "Orange"));
         fruits = fruits.stream().map(fruit -> fruit.concat("-sweet")).collect(Collectors.toList());
-        assertThat(fruits, hasItems("Apple-sweet","Banana-sweet", "Cherry-sweet", "Orange-sweet"));
+        assertThat(fruits, hasItems("Pineaple-sweet","Apple-sweet","Banana-sweet", "Cherry-sweet", "Orange-sweet"));
         fruits.forEach(System.out::println);
-        //fruits.stream().map(fruit -> fruit.concat("-sweet")).forEach(System.out::println);
         //Expected result: Apple-sweet,Banana-sweet, Cherry-sweet, Orange-sweet
     }
 
 
+    @Test
+    public void AddSuffixToItemListSorted(){
+        List<String> fruits = new LinkedList<>(Arrays.asList("Pineaple","Strawberry","Apple", "Banana", "Cherry", "Orange", "Blueberry"));
+
+        fruits = fruits.stream().
+                map(fruit -> fruit.concat("-sweet")).
+                sorted(String::compareToIgnoreCase).
+                collect(Collectors.toList());
+
+        assertThat(fruits, hasItems("Apple-sweet","Banana-sweet", "Blueberry-sweet", "Cherry-sweet", "Orange-sweet","Pineaple-sweet","Strawberry-sweet"));
+
+        fruits.forEach(System.out::println);
+    }
+
+    @Test
+    public void AddSuffixToItemListSortedNoDuplicates(){
+        List<String> fruits = new LinkedList<>(Arrays.asList("Pineaple","Strawberry","Apple", "Banana", "Cherry", "Orange", "Blueberry","Banana"));
+
+        fruits = fruits.stream().
+                map(fruit -> fruit.concat("-sweet")).
+                distinct().
+                sorted(String::compareToIgnoreCase).
+                collect(Collectors.toList());
+
+        assertThat(fruits, hasItems("Apple-sweet","Banana-sweet", "Blueberry-sweet", "Cherry-sweet", "Orange-sweet","Pineaple-sweet","Strawberry-sweet"));
+
+        fruits.forEach(System.out::println);
+    }
 
 }
 
