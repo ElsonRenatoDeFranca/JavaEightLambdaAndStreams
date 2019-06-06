@@ -8,6 +8,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.IntPredicate;
 import java.util.function.Predicate;
@@ -214,6 +215,24 @@ public class JavaEightStreamsTest {
         List<String> filteredFruits = fruits.stream().filter(fruitFilterExample).collect(Collectors.toList());
         assertThat(filteredFruits, hasItems("Apple","Banana","Cherry"));
     }
+
+    @Test
+    public void removeItemFromList(){
+        List<String> fruits = new LinkedList<>(Arrays.asList("Apple", "Banana", "Cherry", "Orange"));
+        Predicate<String> predicate = (String fruit)  -> fruit.equals("Cherry");
+        fruits.removeIf(predicate);
+    }
+
+    @Test
+    public void AddSuffixToItemList(){
+        List<String> fruits = new LinkedList<>(Arrays.asList("Apple", "Banana", "Cherry", "Orange"));
+        fruits = fruits.stream().map(fruit -> fruit.concat("-sweet")).collect(Collectors.toList());
+        assertThat(fruits, hasItems("Apple-sweet","Banana-sweet", "Cherry-sweet", "Orange-sweet"));
+        fruits.forEach(System.out::println);
+        //fruits.stream().map(fruit -> fruit.concat("-sweet")).forEach(System.out::println);
+        //Expected result: Apple-sweet,Banana-sweet, Cherry-sweet, Orange-sweet
+    }
+
 
 
 }
