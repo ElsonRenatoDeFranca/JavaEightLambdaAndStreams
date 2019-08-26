@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 import java.util.regex.Pattern;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -36,6 +37,7 @@ public class JavaEightStreamsTest {
 
     private List<String> infoList;
     private static final String BLANK_SPACE = " ";
+    private static final String COMMA_DELIMITER = ",";
 
 
     @Before
@@ -69,8 +71,6 @@ public class JavaEightStreamsTest {
                 collect(Collectors.toList());
 
         list.forEach(System.out::println);
-
-
     }
 
     @Test
@@ -196,8 +196,9 @@ public class JavaEightStreamsTest {
 
     @Test
     public void testCapitalizeLettersJava8(){
-        String originalString = "Lorem ipsum dolor sit amet";
+        String originalString = "lorem ipsum dolor sit amet";
         String expectedString = "Lorem Ipsum Dolor Sit Amet";
+
         String strings = Stream.of(originalString.split(BLANK_SPACE)).
                          map(s -> Character.toUpperCase(s.charAt(0)) + s.substring(1).toLowerCase()).
                          collect(Collectors.joining(BLANK_SPACE));
@@ -205,6 +206,35 @@ public class JavaEightStreamsTest {
         assertThat(expectedString, is(equalTo(strings)));
 
     }
+
+
+    @Test
+    public void test_forEach_shouldReturnEvenNumbersSeparatedByCommas(){
+        List<Integer> numbers = Arrays.asList(1,2,3,4,5,6,7,8);
+        String expectedText ="2,4,6,8";
+
+        String returnedText = numbers.stream().filter(number -> isEven(number)).
+                map(number -> number.toString()).collect(Collectors.joining(COMMA_DELIMITER));
+
+        assertThat(returnedText, is(equalTo(expectedText)));
+    }
+
+
+    @Test
+    public void test_forEach_shouldReturnOddNumbersSeparatedByCommas(){
+        List<Integer> numbers = Arrays.asList(1,2,3,4,5,6,7,8);
+        String expectedText ="1,3,5,7";
+
+        String returnedText = numbers.stream().filter(number -> !isEven(number)).
+                map(number -> number.toString()).collect(Collectors.joining(COMMA_DELIMITER));
+
+        assertThat(returnedText, is(equalTo(expectedText)));
+    }
+
+    private boolean isEven(Integer number){
+        return number % 2 == 0;
+    }
+
 
 
 
